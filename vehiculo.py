@@ -1,9 +1,9 @@
 class vehiculo():
 
-  def __init__(self, matricula:str, personas:int, horaLlegada:int):
-    self.__matricula = matricula
-    self.__personas = personas
-    self.__horaLlegada = horaLlegada
+  def __init__(self):
+    self.__matricula:str
+    self.__personas:int
+    self.__horaLlegada:int
     self.__horaSalida:int
     self.__tiempo:int
     self.__importe:float

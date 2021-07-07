@@ -1,9 +1,9 @@
 class persona():
-  def __init__(self, nombre, horaEntrada, apellido):
-    self.__nombre = nombre
-    self.__horaEntrada = horaEntrada
-    self.__apellido = apellido
-    self.__horaSalida = 0
+  def __init__(self):
+    self.__nombre:str
+    self.__horaEntrada:int
+    self.__apellido:str
+    self.__horaSalida:int
   
   def getNombre(self):
     return self.__nombre
