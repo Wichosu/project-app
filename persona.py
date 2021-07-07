@@ -1,8 +1,8 @@
 class persona():
-  def __init__(self, nombre, horaEntrada, firma):
+  def __init__(self, nombre, horaEntrada, apellido):
     self.__nombre = nombre
     self.__horaEntrada = horaEntrada
-    self.__firma = firma
+    self.__apellido = apellido
     self.__horaSalida = 0
   
   def getNombre(self):
@@ -26,12 +26,12 @@ class persona():
   def setHoraSalida(self, hora):
     self.__horaSalida = hora
   
-  def setFirma(self, firma):
-    self.__firma = firma
+  def setApellido(self, apellido):
+    self.__apellido = apellido
   
-  def registrar(self, nombre, firma, hora):
+  def registrar(self, nombre, apellido, hora):
     self.setNombre(nombre)
-    self.setFirma(firma)
+    self.setApellido(apellido)
     self.setHoraEntrada(hora)
   
   def marcarSalida(self, hora):
