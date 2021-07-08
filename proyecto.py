@@ -44,8 +44,11 @@ def botonRegistrar():
       lbpersonas.insert(lbpersonas.size()+1, vspinbox.get())
       lbentradave.insert(lbentradave.size()+1, time.strftime("%H:%M"))
       lbsalidave.insert(lbsalidave.size()+1, "--:--")
+      lbtarifa.insert(lbtarifa.size()+1, "$--.--")
       vnombre.set("")
       vspinbox.set("1")
+      automovil = vehiculo(vnombre.get(), int(vspinbox.get()), int(time.strftime("%H%M")))
+      vehiculos.append(automovil)
     elif(vnombre.get() == ""):
       enombre.focus()
 
@@ -54,13 +57,16 @@ def salida():
   if(opciones.current() == 0):
     indice = lbnombre.curselection()
     lbsalida.delete(indice)
-    lbsalida.insert(indice, time.strftime("%H:%M:%S"))
+    lbsalida.insert(indice, time.strftime("%H:%M"))
 
   elif(opciones.current() == 1):
-    lbsalidave.insert(lbsalidave.size()+1, time.strftime("%H:%M"))
-
-
-
+    indice = lbmatricula.curselection()
+    lbsalidave.delete(indice)
+    lbsalidave.insert(indice, time.strftime("%H:%M"))
+    vehiculos[indice[0]].setHoraSalida(int(time.strftime("%H%M")))
+    vehiculos[indice[0]].calcularImporte()
+    lbtarifa.delete(indice)
+    lbtarifa.insert(indice, "$" + str(vehiculos[indice[0]].getImporte()))
 
 #ROOT 
 root = Tk()
@@ -97,6 +103,7 @@ lmatriculalb = Label(root, text="MATRICULAS:")
 lpersonaslb = Label(root, text="PERSONAS:")
 lentradavelb = Label(root, text="HORA DE ENTRADA:")
 lsalidavelb = Label(root, text="HORA DE SALIDA:")
+ltarifalb = Label(root, text="TARIFA:")
 #ENTRYS
 enombre = Entry(root, textvariable=vnombre)
 eapellido = Entry(root, textvariable=vapellido)
@@ -117,6 +124,7 @@ lbmatricula = Listbox(root)
 lbpersonas = Listbox(root)
 lbentradave = Listbox(root)
 lbsalidave = Listbox(root)
+lbtarifa = Listbox(root)
 #BUTTONS
 bregistrar = Button(root, text="REGISTRAR", command=botonRegistrar)
 bsalida = Button(root, text="MARCAR SALIDA", command=salida)
@@ -145,10 +153,12 @@ lmatriculalb.grid(pady=10, row=5, column=0)
 lpersonaslb.grid(pady=10, row=5, column=1)
 lentradavelb.grid(pady=10, row=5, column=2)
 lsalidavelb.grid(pady=10, row=5, column=3)
+ltarifalb.grid(pady=10, row=5, column=4)
 lbmatricula.grid(pady=10, padx=5, row=6, column=0)
 lbpersonas.grid(pady=10, padx=5, row=6, column=1)
 lbentradave.grid(pady=10, padx=5, row=6, column=2)
 lbsalidave.grid(pady=10, padx=5, row=6, column=3)
+lbtarifa.grid(pady=10, padx=5, row=6, column=4)
 #INVOCACIONES DEF
 reloj()
 modificarInterfaz()

@@ -8,6 +8,15 @@ class vehiculo():
     self.__tiempo:int
     self.__importe:float
   
+  def __init__(self, matricula:str, personas:int, horaLlegada:int):
+    self.__matricula = matricula
+    self.__personas = personas
+    self.__horaLlegada = horaLlegada
+    self.__horaSalida:int
+    self.__tiempo:int
+    self.__importe:float
+  
+
   def setMatricula(self, matricula:str):
     self.__matricula = matricula
   
@@ -17,7 +26,7 @@ class vehiculo():
   def setHoraLlegada(self, horaLlegada):
     self.__horaLlegada = horaLlegada
 
-  def setHoraSalida(self, horaSalida):
+  def setHoraSalida(self, horaSalida:int):
     self.__horaSalida = horaSalida
 
   def setTiempo(self, tiempo):
@@ -52,7 +61,7 @@ class vehiculo():
   def calcularImporte(self):
     self.setTiempo(abs(self.getHoraLlegada()-self.getHoraSalida()))
     tarifa = 20
-    self.setImporte((self.getTiempo()/100)*tarifa)
+    self.setImporte(float((self.getTiempo()/100)*tarifa))
 
   def salida(self, hora):
     self.setHoraSalida(hora)
