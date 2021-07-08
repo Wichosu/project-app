@@ -28,6 +28,7 @@ def botonRegistrar():
       lbnombre.insert(lbnombre.size()+1, vnombre.get())
       lbapellidos.insert(lbapellidos.size()+1, vapellido.get())
       lbentrada.insert(lbentrada.size()+1, time.strftime("%H:%M"))
+      lbsalida.insert(lbsalida.size()+1, "--:--")
       vnombre.set("")
       vapellido.set("")
 
@@ -42,10 +43,22 @@ def botonRegistrar():
       lbmatricula.insert(lbmatricula.size()+1, vnombre.get())
       lbpersonas.insert(lbpersonas.size()+1, vspinbox.get())
       lbentradave.insert(lbentradave.size()+1, time.strftime("%H:%M"))
+      lbsalidave.insert(lbsalidave.size()+1, "--:--")
       vnombre.set("")
       vspinbox.set("1")
     elif(vnombre.get() == ""):
       enombre.focus()
+
+def salida():
+  
+  if(opciones.current() == 0):
+    indice = lbnombre.curselection()
+    lbsalida.delete(indice)
+    lbsalida.insert(indice, time.strftime("%H:%M:%S"))
+
+  elif(opciones.current() == 1):
+    lbsalidave.insert(lbsalidave.size()+1, time.strftime("%H:%M"))
+
 
 
 
@@ -57,8 +70,8 @@ root.geometry("700x600")
 root.config(bg="whitesmoke")
 #OBJETOS
 plazaComercial = plaza()
-vehiculos = vehiculo()
-personas = persona()
+vehiculos = []
+personas = []
 #VARIABLES
 vopcion = StringVar()
 vspinbox = StringVar()
@@ -106,7 +119,7 @@ lbentradave = Listbox(root)
 lbsalidave = Listbox(root)
 #BUTTONS
 bregistrar = Button(root, text="REGISTRAR", command=botonRegistrar)
-bsalida = Button(root, text="MARCAR SALIDA")
+bsalida = Button(root, text="MARCAR SALIDA", command=salida)
 #GRIDS
 ltipo.grid(pady=10, row=0, column=0)
 opciones.grid(pady=10, row=0, column=1)
