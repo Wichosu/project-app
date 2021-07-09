@@ -23,6 +23,24 @@ def modificarInterfaz():
     vspinbox.set("1")
   lnombre.after(200, modificarInterfaz)
 
+def focusConstante():
+  focusPersonas = lbnombre.curselection()
+  focusApellidos = lbapellidos.curselection()
+  focusMatricula = lbmatricula.curselection()
+  if(len(focusPersonas) > 0):
+    lbapellidos.see(focusPersonas)
+    lbentrada.see(focusPersonas)
+    lbsalida.see(focusPersonas)
+  elif(len(focusApellidos) > 0):
+    lbpersonas.see(focusApellidos)
+    lbentrada.see(focusApellidos)
+    lbsalida.see(focusApellidos)
+  elif(len(focusMatricula) > 0):
+    lbpersonas.see(focusMatricula)
+    lbentradave.see(focusMatricula)
+    lbsalidave.see(focusMatricula)
+  lbnombre.after(200, focusConstante)
+
 def botonRegistrar():
   if(plazaComercial.getPersonas()+int(vspinbox.get()) <= int(plazaComercial.getMaximo())):
     if(opciones.current() == 0):
@@ -74,12 +92,21 @@ def salida():
     lbsalida.insert(pindices[0], time.strftime("%H:%M"))
     plazaComercial.subPersona(1)
     lpersonasplazav.config(text=str(plazaComercial.getPersonas()))
+    lbnombre.itemconfig(pindices[0], fg="gray", bg="gainsboro")
+    lbapellidos.itemconfig(pindices[0], fg="gray", bg="gainsboro")
+    lbentrada.itemconfig(pindices[0], fg="gray", bg="gainsboro")
+    lbsalida.itemconfig(pindices[0], fg="gray", bg="gainsboro")
 
   elif(len(pindices[1]) != 0):
     lbsalida.delete(pindices[1])
     lbsalida.insert(pindices[1], time.strftime("%H:%M"))
     plazaComercial.subPersona(1)
     lpersonasplazav.config(text=str(plazaComercial.getPersonas()))
+    lbnombre.itemconfig(pindices[1], fg="gray", bg="gainsboro")
+    lbapellidos.itemconfig(pindices[1], fg="gray", bg="gainsboro")
+    lbentrada.config(pindices[1], fg="gray", bg="gainsboro")
+    lbsalida.config(pindices[1], fg="gray", bg="gainsboro")
+
 
   elif(len(vindice) != 0):
     lbsalidave.delete(vindice)
@@ -92,6 +119,11 @@ def salida():
     plazaComercial.subPersona(int(lbpersonas.get(vindice)))
     lpersonasplazav.config(text=str(plazaComercial.getPersonas()))
     lvehiculoplazav.config(text=str(plazaComercial.getAutos()))
+    lbmatricula.itemconfig(vindice, fg="gray", bg="gainsboro")
+    lbpersonas.itemconfig(vindice, fg="gray", bg="gainsboro")
+    lbentradave.itemconfig(vindice, fg="gray", bg="gainsboro")
+    lbsalidave.itemconfig(vindice, fg="gray", bg="gainsboro")
+    lbtarifa.itemconfig(vindice, fg="gray", bg="gainsboro")
 
 def buscar():
   ventanaBuscar = Toplevel(root)
@@ -102,6 +134,14 @@ def buscar():
     indice = plazaComercial.buscarMatricula(vmatri.get())
     if(indice != False):
       lbmatricula.see(indice)
+      lbpersonas.see(indice)
+      lbentradave.see(indice)
+      lbsalidave.see(indice)
+      lbmatricula.itemconfig(indice, bg="dodgerblue")
+      lbpersonas.itemconfig(indice, bg="dodgerblue")
+      lbentradave.itemconfig(indice, bg="dodgerblue")
+      lbsalidave.itemconfig(indice, bg="dodgerblue")
+      lbtarifa.itemconfig(indice, bg="dodgerblue")
       ventanaBuscar.destroy()
     else:
       label.config(text="Matricula no encontrada, intente de nuevo")
@@ -169,6 +209,17 @@ opciones = ttk.Combobox(root, width=15, textvariable=vopcion)
 opciones['values'] = (' Persona',
                       ' Vehiculo')
 opciones.current(0)
+#SCROLLBARS
+#barnombre = Scrollbar(root)
+#barapellidos = Scrollbar(root)
+#barentrada = Scrollbar(root)
+#barsalida = Scrollbar(root)
+
+#barmatricula = Scrollbar(root)
+#barpersonas = Scrollbar(root)
+#barentradave = Scrollbar(root)
+#barsalidave = Scrollbar(root)
+#bartarifa = Scrollbar(root)
 #LISTBOX
 lbnombre = Listbox(root)
 lbapellidos = Listbox(root)
@@ -222,8 +273,26 @@ lbpersonas.grid(pady=10, padx=5, row=6, column=1)
 lbentradave.grid(pady=10, padx=5, row=6, column=2)
 lbsalidave.grid(pady=10, padx=5, row=6, column=3)
 lbtarifa.grid(pady=10, padx=5, row=6, column=4)
+#PACKS
+#barnombre.grid(column=1)
+#barapellidos.grid(column=1)
+#barentrada.grid(column=1)
+#barsalida.grid(column=1)
+#barmatricula.grid(column=1)
+#barpersonas.grid(column=1)
+#barentradave.grid(column=1)
+#barsalidave.grid(column=1)
+#CONFIGS
+#barnombre.config(command=lbnombre.yview)
+#barapellidos.config(command=lbapellidos.yview)
+#barentrada.config(command = lbentrada.yview)
+#barsalida.config(command=lbsalida.yview)
+#barmatricula.config(command=lbmatricula.yview)
+#barpersonas.config(command = lbpersonas.yview)
+#barentradave.config(command = lbentradave.yview)
+#barsalidave.config(command=lbsalidave.yview)
 #INVOCACIONES DEF
 reloj()
 modificarInterfaz()
-
+focusConstante()
 root.mainloop()

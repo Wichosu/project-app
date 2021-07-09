@@ -33,10 +33,12 @@ class plaza():
     self.__autos += 1
 
   def subPersona(self, personas):
-    self.__personas -= personas
+    if(self.__personas>0):
+      self.__personas -= personas
   
   def subAutos(self):
-    self.__autos -= 1
+    if(self.__autos>0):
+      self.__autos -= 1
   
   def buscarMatricula(self, matricula:str):
     i = 0
