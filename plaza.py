@@ -22,10 +22,10 @@ class plaza():
   def getVisitantes(self):
     return self.__visitantes
 
-  def addMatricula(self, matricula):
+  def addMatricula(self, matricula:str):
     self.__matriculas.append(matricula)
 
-  def addPersona(self, personas):
+  def addPersona(self, personas:int):
     self.__personas += personas
     self.__visitantes += personas
   
@@ -38,12 +38,13 @@ class plaza():
   def subAutos(self):
     self.__autos -= 1
   
-  def buscarMatricula(self, matricula):
+  def buscarMatricula(self, matricula:str):
+    i = 0
     for x in self.__matriculas:
       if(x == matricula):
-        print("Vehiculo encontrado")
-        return x
-    print("Vehiculo no encontrado")
+        return i
+      i += 1
+    return False
 
   def hayLugar(self):
     if(self.__personas <= self.__maximo):
