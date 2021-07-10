@@ -3,7 +3,6 @@ from tkinter import ttk
 from tkinter import messagebox
 from vehiculo import *
 from plaza import *
-from persona import *
 import time
 #DEF
 def reloj():
@@ -23,23 +22,18 @@ def modificarInterfaz():
     vspinbox.set("1")
   lnombre.after(200, modificarInterfaz)
 
-def focusConstante():
-  focusPersonas = lbnombre.curselection()
-  focusApellidos = lbapellidos.curselection()
-  focusMatricula = lbmatricula.curselection()
-  if(len(focusPersonas) > 0):
-    lbapellidos.see(focusPersonas)
-    lbentrada.see(focusPersonas)
-    lbsalida.see(focusPersonas)
-  elif(len(focusApellidos) > 0):
-    lbpersonas.see(focusApellidos)
-    lbentrada.see(focusApellidos)
-    lbsalida.see(focusApellidos)
-  elif(len(focusMatricula) > 0):
-    lbpersonas.see(focusMatricula)
-    lbentradave.see(focusMatricula)
-    lbsalidave.see(focusMatricula)
-  lbnombre.after(200, focusConstante)
+def scrollPersonas(event, num):
+  lbnombre.yview("scroll", int(num), "units")
+  lbapellidos.yview("scroll", int(num), "units")
+  lbentrada.yview("scroll", int(num), "units")
+  lbsalida.yview("scroll", int(num), "units")
+
+def scrollVehiculos(event, num):
+  lbmatricula.yview("scroll", int(num), "units")
+  lbpersonas.yview("scroll", int(num), "units")
+  lbentradave.yview("scroll", int(num), "units")
+  lbsalidave.yview("scroll", int(num), "units")
+  lbtarifa.yview("scroll", int(num), "units")
 
 def botonRegistrar():
   if(plazaComercial.getPersonas()+int(vspinbox.get()) <= int(plazaComercial.getMaximo())):
@@ -104,8 +98,8 @@ def salida():
     lpersonasplazav.config(text=str(plazaComercial.getPersonas()))
     lbnombre.itemconfig(pindices[1], fg="gray", bg="gainsboro")
     lbapellidos.itemconfig(pindices[1], fg="gray", bg="gainsboro")
-    lbentrada.config(pindices[1], fg="gray", bg="gainsboro")
-    lbsalida.config(pindices[1], fg="gray", bg="gainsboro")
+    lbentrada.itemconfig(pindices[1], fg="gray", bg="gainsboro")
+    lbsalida.itemconfig(pindices[1], fg="gray", bg="gainsboro")
 
 
   elif(len(vindice) != 0):
@@ -164,7 +158,6 @@ root.config(bg="whitesmoke")
 #OBJETOS
 plazaComercial = plaza()
 vehiculos = []
-personas = []
 #VARIABLES
 vopcion = StringVar()
 vspinbox = StringVar()
@@ -231,6 +224,27 @@ lbpersonas = Listbox(root)
 lbentradave = Listbox(root)
 lbsalidave = Listbox(root)
 lbtarifa = Listbox(root)
+#BINDINGS
+lbnombre.bind("<Up>", lambda e: scrollPersonas(e, -1))
+lbapellidos.bind("<Up>", lambda e: scrollPersonas(e, -1))
+lbentrada.bind("<Up>", lambda e: scrollPersonas(e, -1))
+lbsalida.bind("<Up>", lambda e: scrollPersonas(e, -1))
+lbnombre.bind("<Down>", lambda e: scrollPersonas(e, 1))
+lbapellidos.bind("<Down>", lambda e: scrollPersonas(e, 1))
+lbentrada.bind("<Down>", lambda e: scrollPersonas(e, 1))
+lbsalida.bind("<Down>", lambda e: scrollPersonas(e, 1))
+
+lbmatricula.bind("<Up>", lambda e: scrollVehiculos(e, -1))
+lbpersonas.bind("<Up>", lambda e: scrollVehiculos(e, -1))
+lbentradave.bind("<Up>", lambda e: scrollVehiculos(e, -1))
+lbsalidave.bind("<Up>", lambda e: scrollVehiculos(e, -1))
+lbentradave.bind("<Up>", lambda e: scrollVehiculos(e, -1))
+lbmatricula.bind("<Down>", lambda e: scrollVehiculos(e, 1))
+lbpersonas.bind("<Down>", lambda e: scrollVehiculos(e, 1))
+lbentradave.bind("<Down>", lambda e: scrollVehiculos(e, 1))
+lbsalidave.bind("<Down>", lambda e: scrollVehiculos(e, 1))
+lbentradave.bind("<Down>", lambda e: scrollVehiculos(e, 1))
+
 #BUTTONS
 bregistrar = Button(root, text="REGISTRAR", command=botonRegistrar)
 bsalida = Button(root, text="MARCAR SALIDA", command=salida)
@@ -294,5 +308,4 @@ lbtarifa.grid(pady=10, padx=5, row=6, column=4)
 #INVOCACIONES DEF
 reloj()
 modificarInterfaz()
-focusConstante()
 root.mainloop()
